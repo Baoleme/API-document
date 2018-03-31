@@ -36,6 +36,35 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /restaurant/emailConfirm:
+    post:
+      tags:
+      - 'Restaurant Account'
+      summary: '发送邮箱确认邮件'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    get:
+      tags:
+      - 'Restaurant Account'
+      summary: '餐厅注册邮箱确认'
+      parameters:
+      - in: 'query'
+        name: 'cipher'
+        type: 'string'
+        description: '密文'
+        required: true
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /restaurant/session:
     post:
       tags:
