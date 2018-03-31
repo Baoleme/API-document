@@ -99,7 +99,7 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /customer/login:
+  /customer/session:
     post:
       tags:
       - 'Customer Account'
@@ -119,6 +119,17 @@ paths:
           description: 'OK'
           schema:
             $ref: '#/definitions/User'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      tags:
+      - 'Customer Account'
+      summary: '退出登录'
+      responses:
+        200:
+          description: 'OK'
         400:
           description: 'Error'
           schema:
