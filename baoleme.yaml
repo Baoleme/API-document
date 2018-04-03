@@ -40,7 +40,7 @@ paths:
     post:
       tags:
       - 'Restaurant Account'
-      summary: '发送邮箱确认邮件'
+      summary: '发送邮箱激活邮件'
       responses:
         200:
           description: 'OK'
@@ -51,7 +51,7 @@ paths:
     get:
       tags:
       - 'Restaurant Account'
-      summary: '餐厅注册邮箱确认'
+      summary: '餐厅注册邮箱激活'
       parameters:
       - in: 'query'
         name: 'cipher'
