@@ -10,6 +10,10 @@ tags:
   description: '餐厅账号'
 - name: 'Customer Account'
   description: '用户账号'
+- name: 'Customer Order'
+  description: '用户点餐'
+- name: 'Restaurant Management'
+  description: '餐厅管理'
 schemes:
 - 'https'
 paths:
@@ -18,17 +22,29 @@ paths:
       tags:
       - 'Restaurant Account'
       summary: '餐厅注册'
+      consumes:
+      - 'multipart/form-data'
       parameters:
-      - in: 'body'
-        name: 'body'
-        description: '注册信息'
+      - in: 'formData'
+        name: 'email'
+        type: 'string'
+        description: '邮箱'
         required: true
-        schema:
-          allOf:
-          - $ref: '#/definitions/RestaurantWithoutId'
-          - properties:
-              password:
-                type: 'string'
+      - in: 'formData'
+        name: 'password'
+        type: 'string'
+        description: '密码'
+        required: true
+      - in: 'formData'
+        name: 'name'
+        type: 'string'
+        description: '店铺名'
+        required: true
+      - in: 'formData'
+        name: 'license'
+        type: 'file'
+        description: '营业执照'
+        required: true
       responses:
         200:
           description: 'OK'
@@ -58,6 +74,11 @@ paths:
         type: 'string'
         description: '密文'
         required: true
+      - in: 'query'
+        name: 'onSuccess'
+        type: 'string'
+        description: '成功之后的回调，如果不提供，则直接显示plain认证结果'
+        required: false
       responses:
         200:
           description: 'OK'
@@ -85,6 +106,8 @@ paths:
       responses:
         200:
           description: 'OK'
+          schema:
+            $ref: '#/definitions/Restaurant'
         400:
           description: 'Error'
           schema:
@@ -123,7 +146,7 @@ paths:
         200:
           description: 'OK'
           schema:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/Customer'
         400:
           description: 'Error'
           schema:
@@ -147,7 +170,7 @@ paths:
         200:
           description: 'OK'
           schema:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/Customer'
         400:
           description: 'Error'
           schema:
@@ -156,6 +179,406 @@ paths:
       tags:
       - 'Customer Account'
       summary: '退出登录'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /restaurant/{id}/table:
+    parameters:
+    - name: 'id'
+      in: 'path'
+      required: true
+      description: '餐厅id'
+      type: 'string'
+    get:
+      tags:
+      - 'Customer Order'
+      summary: '获取餐厅的桌子列表'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: 'array'
+            items:
+              type: 'string'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /restaurant/{id}/dish:
+    parameters:
+    - name: 'id'
+      in: 'path'
+      required: true
+      description: '餐厅id'
+      type: 'string'
+    get:
+      tags:
+      - 'Customer Order'
+      summary: '获取餐厅的菜品列表'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Category'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /order:
+    post:
+      tags:
+      - 'Customer Order'
+      summary: '下单'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '订单信息'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            restaurant_id:
+              type: 'string'
+            table:
+              type: 'string'
+            dish:
+              type: 'array'
+              items:
+                type: 'object'
+                properties:
+                  dish_id:
+                    type: 'string'
+                  specifications:
+                    type: 'array'
+                    items:
+                      type: 'number'
+            remark:
+              type: 'string'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Order'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /payment:
+    post:
+      tags:
+      - 'Customer Order'
+      summary: '支付订单'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '订单信息'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            order_id:
+              type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /restaurant/self/table:
+    get:
+      tags:
+      - 'Restaurant Management'
+      summary: '获取餐厅的桌子列表'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: 'array'
+            items:
+              type: 'string'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    post:
+      tags:
+      - 'Restaurant Management'
+      summary: '添加新的桌子'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '桌子列表'
+        required: true
+        schema:
+          type: 'array'
+          items:
+            type: 'string'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: 'array'
+            items:
+              type: 'string'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      tags:
+      - 'Restaurant Management'
+      summary: '删除桌子'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '桌子列表'
+        required: true
+        schema:
+          type: 'array'
+          items:
+            type: 'string'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: 'array'
+            items:
+              type: 'string'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /restaurant/self/dish:
+    get:
+      tags:
+      - 'Restaurant Management'
+      summary: '获取分类与菜品列表'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Category'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    post:
+      tags:
+      - 'Restaurant Management'
+      summary: '新增菜品'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '菜品信息'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            name:
+              type: 'string'
+            price:
+              type: 'number'
+            specifications:
+              $ref: '#/definitions/Specification'
+            image_urls:
+              type: 'array'
+              items:
+                type: 'string'
+            description:
+              type: 'string'
+            tags:
+              type: 'array'
+              items:
+                type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    put:
+      tags:
+      - 'Restaurant Management'
+      summary: '修改菜品'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '菜品信息，全部选填，提交需要修改的字段即可'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            name:
+              type: 'string'
+            price:
+              type: 'number'
+            specifications:
+              $ref: '#/definitions/Specification'
+            image_urls:
+              type: 'array'
+              items:
+                type: 'string'
+            description:
+              type: 'string'
+            tags:
+              type: 'array'
+              items:
+                type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      tags:
+      - 'Restaurant Management'
+      summary: '删除菜品'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '菜品id'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            category_id:
+              type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /restaurant/self/category:
+    post:
+      tags:
+      - 'Restaurant Management'
+      summary: '新增分类'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '分类名称'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            name:
+              type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    put:
+      tags:
+      - 'Restaurant Management'
+      summary: '修改分类名'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '分类id'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            category_id:
+              type: 'string'
+            name:
+              type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      tags:
+      - 'Restaurant Management'
+      summary: '删除分类'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: 'dump是另个一分类的id，可选填。如果提供dump，则该分类下的所有菜品会被导入到新分类下；如果不提供，这些菜品会被直接删除'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            category_id:
+              type: 'string'
+            dump:
+              type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /restaurant/self/order:
+    get:
+      tags:
+      - 'Restaurant Management'
+      summary: '获取订单列表'
+      description: '根据订单状态和时间排序'
+      parameters:
+      - in: 'query'
+        name: 'since'
+        description: '起始时间点'
+        default: 'NOW()'
+        required: true
+        type: 'string'
+      - in: 'query'
+        name: 'number'
+        description: '数量'
+        default: 30
+        required: true
+        type: 'number'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Order'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    put:
+      tags:
+      - 'Restaurant Management'
+      summary: '接单或拒绝订单'
+      description: '若接单，status传入accepted；如拒绝订单，status传入cancelled'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '订单id'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            order_id:
+              type: 'string'
+            status:
+              type: 'string'
       responses:
         200:
           description: 'OK'
@@ -178,14 +601,111 @@ definitions:
         type: 'boolean'
       name:
         type: 'string'
+      logo_url:
+        type: 'string'
+      description:
+        type: 'string'
+      phone:
+        type: 'string'
+      license_url:
+        type: 'string'
   Restaurant:
     allOf:
-    - $ref: '#/definitions/RestaurantWithoutId'
     - properties:
         restaurant_id:
           type: 'integer'
-  User:
+    - $ref: '#/definitions/RestaurantWithoutId'
+  Customer:
     type: 'object'
     properties:
       customer_id:
         type: 'integer'
+  Category:
+    type: 'object'
+    properties:
+      category_id:
+        type: 'string'
+      name:
+        type: 'string'
+      dish:
+        type: 'array'
+        items:
+          $ref: '#/definitions/Dish'
+  Specification:
+    type: 'object'
+    properties:
+      name:
+        type: 'string'
+      require:
+        type: 'boolean'
+      default:
+        type: 'number'
+      options:
+        type: 'array'
+        items:
+          type: 'object'
+          properties:
+            name:
+              type: 'string'
+            delta:
+              type: 'number'
+  Tag:
+    type: 'object'
+    properties:
+      tag_id:
+        type: 'string'
+      name:
+        type: 'string'
+  Dish:
+    type: 'object'
+    properties:
+      dish_id:
+        type: 'string'
+      category_id:
+        type: 'string'
+      name:
+        type: 'string'
+      price:
+        type: 'number'
+      specifications:
+        type: 'array'
+        items:
+          $ref: '#/definitions/Specification'
+      image_urls:
+        type: 'array'
+        items:
+          type: 'string'
+      description:
+        type: 'string'
+      tags:
+        type: 'array'
+        items:
+          $ref: '#/definitions/Tag'
+  Order:
+    type: 'object'
+    properties:
+      order_id:
+        type: 'string'
+      customer:
+        $ref: '#/definitions/Customer'
+      restaurant:
+        $ref: '#/definitions/Restaurant'
+      price:
+        type: 'number'
+      dish:
+        type: 'array'
+        items:
+          type: 'object'
+          properties:
+            name:
+              type: 'string'
+            specification:
+              type:  'string'
+            price:
+              type: 'number'
+      status:
+        type: 'string'
+      remark:
+        type: 'string'
+      payment:
+        type: 'string'
