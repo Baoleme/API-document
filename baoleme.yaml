@@ -690,6 +690,8 @@ definitions:
         $ref: '#/definitions/Customer'
       restaurant:
         $ref: '#/definitions/Restaurant'
+      table:
+        type: 'string'
       price:
         type: 'number'
       dish:
