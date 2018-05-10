@@ -14,6 +14,8 @@ tags:
   description: '用户点餐'
 - name: 'Restaurant Management'
   description: '餐厅管理'
+- name: 'System'
+  description: '系统'
 schemes:
 - 'https'
 paths:
@@ -582,6 +584,31 @@ paths:
       responses:
         200:
           description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /images:
+    post:
+      tags:
+      - 'System'
+      summary: '上传图片'
+      consumes:
+      - 'multipart/form-data'
+      parameters:
+      - in: 'formData'
+        name: 'image'
+        type: 'file'
+        description: '图片'
+        required: true
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: 'object'
+            properties:
+              url:
+                type: 'string'
         400:
           description: 'Error'
           schema:
