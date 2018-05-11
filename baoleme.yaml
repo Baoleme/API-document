@@ -402,6 +402,13 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /restaurant/self/dish/{id}:
+    parameters:
+    - name: 'id'
+      in: 'path'
+      required: true
+      description: '菜品id'
+      type: 'string'
     put:
       tags:
       - 'Restaurant Management'
@@ -441,16 +448,6 @@ paths:
       tags:
       - 'Restaurant Management'
       summary: '删除菜品'
-      parameters:
-      - in: 'body'
-        name: 'body'
-        description: '菜品id'
-        required: true
-        schema:
-          type: 'object'
-          properties:
-            category_id:
-              type: 'string'
       responses:
         200:
           description: 'OK'
@@ -480,6 +477,13 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /restaurant/self/category/{id}:
+    parameters:
+    - name: 'id'
+      in: 'path'
+      required: true
+      description: '分类id'
+      type: 'string'
     put:
       tags:
       - 'Restaurant Management'
@@ -492,8 +496,6 @@ paths:
         schema:
           type: 'object'
           properties:
-            category_id:
-              type: 'string'
             name:
               type: 'string'
       responses:
@@ -515,8 +517,6 @@ paths:
         schema:
           type: 'object'
           properties:
-            category_id:
-              type: 'string'
             dump:
               type: 'string'
       responses:
