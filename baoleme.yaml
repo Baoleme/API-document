@@ -509,7 +509,7 @@ paths:
               type: 'array'
               items:
                 $ref: '#/definitions/Specification'
-            image_urls:
+            image_url:
               type: 'array'
               items:
                 type: 'string'
@@ -555,7 +555,7 @@ paths:
               type: 'array'
               items:
                 $ref: '#/definitions/Specification'
-            image_urls:
+            image_url:
               type: 'array'
               items:
                 type: 'string'
@@ -697,7 +697,7 @@ definitions:
         type: 'array'
         items:
           $ref: '#/definitions/Specification'
-      image_urls:
+      image_url:
         type: 'array'
         items:
           type: 'string'
