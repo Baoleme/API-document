@@ -316,7 +316,7 @@ paths:
       tags:
       - 'Restaurant Management'
       summary: '接单或拒绝订单'
-      description: '若接单，status传入accepted；如拒绝订单，status传入cancelled'
+      description: '若接单，state传入accepted；如拒绝订单，state传入cancelled'
       parameters:
       - in: 'body'
         name: 'body'
@@ -327,7 +327,7 @@ paths:
           properties:
             order_id:
               type: 'number'
-            status:
+            state:
               type: 'string'
       responses:
         200:
@@ -737,7 +737,7 @@ definitions:
               type:  'string'
             price:
               type: 'number'
-      status:
+      state:
         type: 'string'
       remark:
         type: 'string'
