@@ -3,7 +3,7 @@ info:
   description: '饱了么API文档'
   version: '花Q'
   title: 'Baoleme'
-host: 'baoleme.andiedie.cn'
+host: 'api.baoleme.andiedie.cn'
 basePath: '/'
 tags:
 - name: 'Restaurant Account'
