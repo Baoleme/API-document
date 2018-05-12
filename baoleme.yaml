@@ -268,9 +268,7 @@ paths:
         200:
           description: 'OK'
           schema:
-            type: 'array'
-            items:
-              $ref: '#/definitions/Order'
+            $ref: '#/definitions/Order'
         400:
           description: 'Error'
           schema:
