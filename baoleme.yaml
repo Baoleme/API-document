@@ -647,6 +647,8 @@ definitions:
     properties:
       category_id:
         type: 'string'
+      restaurant_id:
+        type: 'string'
       name:
         type: 'string'
       dish:
