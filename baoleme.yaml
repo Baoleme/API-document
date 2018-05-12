@@ -347,16 +347,6 @@ paths:
       tags:
       - 'Customer Order'
       summary: '支付订单'
-      parameters:
-      - in: 'body'
-        name: 'body'
-        description: '订单信息'
-        required: true
-        schema:
-          type: 'object'
-          properties:
-            order_id:
-              type: 'number'
       responses:
         200:
           description: 'OK'
