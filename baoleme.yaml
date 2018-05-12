@@ -249,6 +249,8 @@ paths:
               type: 'number'
             table:
               type: 'string'
+            price:
+              type: 'number'
             dish:
               type: 'array'
               items:
