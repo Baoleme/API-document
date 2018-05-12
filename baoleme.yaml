@@ -273,6 +273,7 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /restaurant/self/order:
     get:
       tags:
       - 'Restaurant Management'
@@ -302,6 +303,13 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /order/{id}:
+    parameters:
+    - name: 'id'
+      in: 'path'
+      required: true
+      description: '订单Id'
+      type: 'string'
     put:
       tags:
       - 'Restaurant Management'
