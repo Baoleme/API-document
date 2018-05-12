@@ -246,7 +246,7 @@ paths:
           type: 'object'
           properties:
             restaurant_id:
-              type: 'string'
+              type: 'number'
             table:
               type: 'string'
             dish:
@@ -255,7 +255,7 @@ paths:
                 type: 'object'
                 properties:
                   dish_id:
-                    type: 'string'
+                    type: 'number'
                   specifications:
                     type: 'array'
                     items:
@@ -324,7 +324,7 @@ paths:
           type: 'object'
           properties:
             order_id:
-              type: 'string'
+              type: 'number'
             status:
               type: 'string'
       responses:
@@ -348,7 +348,7 @@ paths:
           type: 'object'
           properties:
             order_id:
-              type: 'string'
+              type: 'number'
       responses:
         200:
           description: 'OK'
@@ -508,7 +508,7 @@ paths:
           type: 'object'
           properties:
             category_id:
-              type: 'string'
+              type: 'number'
             name:
               type: 'string'
             price:
@@ -554,7 +554,7 @@ paths:
           type: 'object'
           properties:
             category_id:
-              type: 'string'
+              type: 'number'
             name:
               type: 'string'
             price:
@@ -643,20 +643,20 @@ definitions:
     allOf:
     - properties:
         restaurant_id:
-          type: 'integer'
+          type: 'number'
     - $ref: '#/definitions/RestaurantWithoutId'
   Customer:
     type: 'object'
     properties:
       customer_id:
-        type: 'integer'
+        type: 'number'
   Category:
     type: 'object'
     properties:
       category_id:
-        type: 'string'
+        type: 'number'
       restaurant_id:
-        type: 'string'
+        type: 'number'
       name:
         type: 'string'
       dish:
@@ -685,18 +685,18 @@ definitions:
     type: 'object'
     properties:
       tag_id:
-        type: 'string'
+        type: 'number'
       name:
         type: 'string'
   Dish:
     type: 'object'
     properties:
       dish_id:
-        type: 'string'
+        type: 'number'
       restaurant_id:
-        type: 'string'
+        type: 'number'
       category_id:
-        type: 'string'
+        type: 'number'
       name:
         type: 'string'
       price:
@@ -719,7 +719,7 @@ definitions:
     type: 'object'
     properties:
       order_id:
-        type: 'string'
+        type: 'number'
       customer:
         $ref: '#/definitions/Customer'
       restaurant:
