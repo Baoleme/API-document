@@ -323,8 +323,6 @@ paths:
         schema:
           type: 'object'
           properties:
-            order_id:
-              type: 'number'
             state:
               type: 'string'
       responses:
