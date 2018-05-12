@@ -336,7 +336,13 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /payment:
+  /order/{id}/payment:
+    parameters:
+    - name: 'id'
+      in: 'path'
+      required: true
+      description: '订单Id'
+      type: 'string'
     post:
       tags:
       - 'Customer Order'
