@@ -273,6 +273,59 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
+    get:
+      tags:
+      - 'Restaurant Management'
+      summary: '获取订单列表'
+      description: '根据订单状态和时间排序'
+      parameters:
+      - in: 'query'
+        name: 'since'
+        description: '起始时间点'
+        default: 'NOW()'
+        required: true
+        type: 'string'
+      - in: 'query'
+        name: 'number'
+        description: '数量'
+        default: 30
+        required: true
+        type: 'number'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Order'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    put:
+      tags:
+      - 'Restaurant Management'
+      summary: '接单或拒绝订单'
+      description: '若接单，status传入accepted；如拒绝订单，status传入cancelled'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '订单id'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            order_id:
+              type: 'string'
+            status:
+              type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /payment:
     post:
       tags:
@@ -295,7 +348,7 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /restaurant/self/table:
+  /table:
     get:
       tags:
       - 'Restaurant Management'
@@ -351,111 +404,7 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /restaurant/self/dish:
-    get:
-      tags:
-      - 'Restaurant Management'
-      summary: '获取分类与菜品列表'
-      responses:
-        200:
-          description: 'OK'
-          schema:
-            type: 'array'
-            items:
-              $ref: '#/definitions/Category'
-        400:
-          description: 'Error'
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-    post:
-      tags:
-      - 'Restaurant Management'
-      summary: '新增菜品'
-      parameters:
-      - in: 'body'
-        name: 'body'
-        description: '菜品信息'
-        required: true
-        schema:
-          type: 'object'
-          properties:
-            name:
-              type: 'string'
-            price:
-              type: 'number'
-            specifications:
-              $ref: '#/definitions/Specification'
-            image_urls:
-              type: 'array'
-              items:
-                type: 'string'
-            description:
-              type: 'string'
-            tags:
-              type: 'array'
-              items:
-                type: 'string'
-      responses:
-        200:
-          description: 'OK'
-        400:
-          description: 'Error'
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /restaurant/self/dish/{id}:
-    parameters:
-    - name: 'id'
-      in: 'path'
-      required: true
-      description: '菜品id'
-      type: 'string'
-    put:
-      tags:
-      - 'Restaurant Management'
-      summary: '修改菜品'
-      parameters:
-      - in: 'body'
-        name: 'body'
-        description: '菜品信息，全部选填，提交需要修改的字段即可'
-        required: true
-        schema:
-          type: 'object'
-          properties:
-            name:
-              type: 'string'
-            price:
-              type: 'number'
-            specifications:
-              $ref: '#/definitions/Specification'
-            image_urls:
-              type: 'array'
-              items:
-                type: 'string'
-            description:
-              type: 'string'
-            tags:
-              type: 'array'
-              items:
-                type: 'string'
-      responses:
-        200:
-          description: 'OK'
-        400:
-          description: 'Error'
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-    delete:
-      tags:
-      - 'Restaurant Management'
-      summary: '删除菜品'
-      responses:
-        200:
-          description: 'OK'
-        400:
-          description: 'Error'
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /restaurant/self/category:
+  /category:
     post:
       tags:
       - 'Restaurant Management'
@@ -477,7 +426,7 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /restaurant/self/category/{id}:
+  /category/{id}:
     parameters:
     - name: 'id'
       in: 'path'
@@ -510,15 +459,11 @@ paths:
       - 'Restaurant Management'
       summary: '删除分类'
       parameters:
-      - in: 'body'
-        name: 'body'
+      - in: 'query'
+        name: 'dump'
         description: 'dump是另个一分类的id，可选填。如果提供dump，则该分类下的所有菜品会被导入到新分类下；如果不提供，这些菜品会被直接删除'
         required: true
-        schema:
-          type: 'object'
-          properties:
-            dump:
-              type: 'string'
+        type: 'string'
       responses:
         200:
           description: 'OK'
@@ -526,53 +471,111 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /restaurant/self/order:
+  /dish:
     get:
       tags:
       - 'Restaurant Management'
-      summary: '获取订单列表'
-      description: '根据订单状态和时间排序'
-      parameters:
-      - in: 'query'
-        name: 'since'
-        description: '起始时间点'
-        default: 'NOW()'
-        required: true
-        type: 'string'
-      - in: 'query'
-        name: 'number'
-        description: '数量'
-        default: 30
-        required: true
-        type: 'number'
+      summary: '获取分类与菜品列表'
       responses:
         200:
           description: 'OK'
           schema:
             type: 'array'
             items:
-              $ref: '#/definitions/Order'
+              $ref: '#/definitions/Category'
         400:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
-    put:
+    post:
       tags:
       - 'Restaurant Management'
-      summary: '接单或拒绝订单'
-      description: '若接单，status传入accepted；如拒绝订单，status传入cancelled'
+      summary: '新增菜品'
       parameters:
       - in: 'body'
         name: 'body'
-        description: '订单id'
+        description: '菜品信息'
         required: true
         schema:
           type: 'object'
           properties:
-            order_id:
+            category_id:
               type: 'string'
-            status:
+            name:
               type: 'string'
+            price:
+              type: 'number'
+            specifications:
+              type: 'array'
+              items:
+                $ref: '#/definitions/Specification'
+            image_urls:
+              type: 'array'
+              items:
+                type: 'string'
+            description:
+              type: 'string'
+            tags:
+              type: 'array'
+              items:
+                type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /dish/{id}:
+    parameters:
+    - name: 'id'
+      in: 'path'
+      required: true
+      description: '菜品id'
+      type: 'string'
+    put:
+      tags:
+      - 'Restaurant Management'
+      summary: '修改菜品'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '菜品信息，全部选填，提交需要修改的字段即可'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            category_id:
+              type: 'string'
+            name:
+              type: 'string'
+            price:
+              type: 'number'
+            specifications:
+              type: 'array'
+              items:
+                $ref: '#/definitions/Specification'
+            image_urls:
+              type: 'array'
+              items:
+                type: 'string'
+            description:
+              type: 'string'
+            tags:
+              type: 'array'
+              items:
+                type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      tags:
+      - 'Restaurant Management'
+      summary: '删除菜品'
       responses:
         200:
           description: 'OK'
