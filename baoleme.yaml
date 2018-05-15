@@ -424,6 +424,13 @@ paths:
       responses:
         200:
           description: 'OK'
+          schema:
+            type: 'object'
+            properties:
+              category_id:
+                type: 'string'
+              name:
+                type: 'string'
         400:
           description: 'Error'
           schema:
@@ -524,6 +531,8 @@ paths:
       responses:
         200:
           description: 'OK'
+          schema:
+            $ref: '#/definitions/Dish'
         400:
           description: 'Error'
           schema:
@@ -675,13 +684,6 @@ definitions:
               type: 'string'
             delta:
               type: 'number'
-  Tag:
-    type: 'object'
-    properties:
-      tag_id:
-        type: 'number'
-      name:
-        type: 'string'
   Dish:
     type: 'object'
     properties:
@@ -708,7 +710,7 @@ definitions:
       tag:
         type: 'array'
         items:
-          $ref: '#/definitions/Tag'
+          type: 'string'
   Order:
     type: 'object'
     properties:
