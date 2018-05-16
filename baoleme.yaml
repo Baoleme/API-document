@@ -302,6 +302,34 @@ paths:
         200:
           description: 'OK'
           schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Order'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    get:
+      tags:
+      - 'Customer Order'
+      summary: '获取全部订单'
+      parameters:
+      - in: 'query'
+        name: 'since'
+        description: '起始时间点'
+        default: 'NOW()'
+        required: true
+        type: 'string'
+      - in: 'query'
+        name: 'number'
+        description: '数量'
+        default: 30
+        required: true
+        type: 'number'
+      responses:
+        200:
+          description: 'OK'
+          schema:
             $ref: '#/definitions/Order'
         400:
           description: 'Error'
