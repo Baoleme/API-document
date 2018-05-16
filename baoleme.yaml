@@ -225,29 +225,14 @@ paths:
         200:
           description: 'OK'
           schema:
-            $ref: '#/definitions/Restaurant'
-        400:
-          description: 'Error'
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /restaurant/{id}/dish:
-    parameters:
-    - name: 'id'
-      in: 'path'
-      required: true
-      description: '餐厅id'
-      type: 'string'
-    get:
-      tags:
-      - 'Customer Order'
-      summary: '获取餐厅的菜品列表'
-      responses:
-        200:
-          description: 'OK'
-          schema:
-            type: 'array'
-            items:
-              $ref: '#/definitions/Category'
+            allOf:
+            - $ref: '#/definitions/Restaurant'
+            - type: 'object'
+              properties:
+                dish:
+                  type: 'array'
+                  items:
+                    $ref: '#/definitions/Category'
         400:
           description: 'Error'
           schema:
