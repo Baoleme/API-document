@@ -803,3 +803,5 @@ definitions:
         type: 'string'
       payment:
         type: 'string'
+      time:
+        type: 'string'
