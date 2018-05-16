@@ -139,6 +139,35 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
+    put:
+      tags:
+      - 'Restaurant Account'
+      summary: '修改餐厅信息'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '提交需要修改的字段即可'
+        required: true
+        schema:
+          type: 'object'
+          properties:
+            password:
+              type: 'string'
+            name:
+              type: 'string'
+            logo_url:
+              type: 'string'
+            description:
+              type: 'string'
+            phone:
+              type: 'string'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /customer/self:
     get:
       tags:
