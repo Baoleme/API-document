@@ -210,6 +210,26 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
+  /restaurant/{id}:
+    parameters:
+    - name: 'id'
+      in: 'path'
+      required: true
+      description: '餐厅id'
+      type: 'string'
+    get:
+      tags:
+      - 'Customer Order'
+      summary: '获取餐厅信息'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            $ref: '#/definitions/Restaurant'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /restaurant/{id}/dish:
     parameters:
     - name: 'id'
