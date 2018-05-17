@@ -492,7 +492,7 @@ paths:
             type: 'object'
             properties:
               category_id:
-                type: 'string'
+                type: 'number'
               name:
                 type: 'string'
         400:
