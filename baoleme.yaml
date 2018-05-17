@@ -296,6 +296,8 @@ paths:
                     type: 'array'
                     items:
                       type: 'number'
+                  count:
+                    type: 'number'
             remark:
               type: 'string'
       responses:
@@ -796,6 +798,8 @@ definitions:
             specification:
               type:  'string'
             price:
+              type: 'number'
+            count:
               type: 'number'
       state:
         type: 'string'
