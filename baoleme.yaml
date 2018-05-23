@@ -345,7 +345,7 @@ paths:
       - in: 'query'
         name: 'page'
         description: '分页'
-        default: '0'
+        default: 0
         type: 'number'
       - in: 'query'
         name: 'number'
@@ -356,9 +356,14 @@ paths:
         200:
           description: 'OK'
           schema:
-            type: 'array'
-            items:
-              $ref: '#/definitions/Order'
+            type: 'object'
+            properties:
+              number_of_pages:
+                type: 'number'
+              order:
+                type: 'array'
+                items:
+                  $ref: '#/definitions/Order'
         400:
           description: 'Error'
           schema:
