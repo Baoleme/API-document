@@ -343,10 +343,10 @@ paths:
       description: '根据订单状态和时间排序'
       parameters:
       - in: 'query'
-        name: 'since'
-        description: '起始时间点'
-        default: 'NOW()'
-        type: 'string'
+        name: 'page'
+        description: '分页'
+        default: '0'
+        type: 'number'
       - in: 'query'
         name: 'number'
         description: '数量'
@@ -374,7 +374,7 @@ paths:
       tags:
       - 'Restaurant Management'
       summary: '接单或拒绝订单'
-      description: '若接单，state传入accepted；如拒绝订单，state传入cancelled'
+      description: 'state说明：accepted---接单；cancelled---拒绝；completed---完成'
       parameters:
       - in: 'body'
         name: 'body'
