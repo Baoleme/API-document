@@ -357,6 +357,10 @@ paths:
         description: '订单状态列表，用逗号隔开，例如paid,accepted。结果将使用相同的顺序。'
         default: 'paid,accepted,cancelled,completed,created'
         type: 'string'
+      - in: 'query'
+        name: 'keyword'
+        description: '关键词，如提供数字，则在订单号、价格和桌号中搜索，若提供字符则在菜品，支付和备注中搜索'
+        type: 'string'
       responses:
         200:
           description: 'OK'
@@ -584,6 +588,8 @@ paths:
               type: 'string'
             price:
               type: 'number'
+            spicy:
+              type: 'number'
             specifications:
               type: 'array'
               items:
@@ -631,6 +637,8 @@ paths:
             name:
               type: 'string'
             price:
+              type: 'number'
+            spicy:
               type: 'number'
             specifications:
               type: 'array'
@@ -766,6 +774,8 @@ definitions:
       name:
         type: 'string'
       price:
+        type: 'number'
+      spicy:
         type: 'number'
       specifications:
         type: 'array'
