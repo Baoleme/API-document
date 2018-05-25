@@ -359,7 +359,7 @@ paths:
         type: 'string'
       - in: 'query'
         name: 'keyword'
-        description: '关键词，如提供数字，则在订单号、价格和桌号中搜索，若提供字符则在菜品，支付和备注中搜索'
+        description: '关键词，如提供数字，则在订单号、价格和桌号中全匹配搜索，如提供字符则在菜品，支付和备注中模糊搜索'
         type: 'string'
       responses:
         200:
