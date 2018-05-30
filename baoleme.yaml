@@ -317,10 +317,10 @@ paths:
       summary: '获取全部订单'
       parameters:
       - in: 'query'
-        name: 'since'
-        description: '起始时间点'
-        default: 'NOW()'
-        type: 'string'
+        name: 'page'
+        description: '分页'
+        default: 0
+        type: 'number'
       - in: 'query'
         name: 'number'
         description: '数量'
@@ -509,6 +509,26 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
+    put:
+      tags:
+      - 'Restaurant Management'
+      summary: '修改分类顺序'
+      parameters:
+      - in: 'body'
+        name: 'body'
+        description: '由category_id组成的数组，更新后的分类顺序由category_id出现的顺序决定'
+        required: true
+        schema:
+          type: 'array'
+          items:
+            type: 'number'
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /category/{id}:
     parameters:
     - name: 'id'
@@ -638,6 +658,8 @@ paths:
               type: 'string'
             price:
               type: 'number'
+            selling:
+              type: 'boolean'
             spicy:
               type: 'number'
             specifications:
@@ -819,11 +841,16 @@ definitions:
               type: 'number'
             image_url:
               type: 'string'
-      state:
-        type: 'string'
+      state_record:
+        type: 'array'
+        items:
+          type: 'object'
+          properties:
+            state:
+              type: 'string'
+            time:
+              type: 'string'
       remark:
         type: 'string'
       payment:
-        type: 'string'
-      time:
         type: 'string'
