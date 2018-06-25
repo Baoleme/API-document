@@ -161,6 +161,8 @@ paths:
               type: 'string'
             phone:
               type: 'string'
+            address:
+              type: 'string'
       responses:
         200:
           description: 'OK'
@@ -373,6 +375,31 @@ paths:
                 type: 'array'
                 items:
                   $ref: '#/definitions/Order'
+        400:
+          description: 'Error'
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /restaurant/self/order/count:
+    get:
+      tags:
+      - 'Restaurant Management'
+      summary: '获取今日订单数量'
+      responses:
+        200:
+          description: 'OK'
+          schema:
+            type: 'object'
+            properties:
+              created:
+                type: 'number'
+              paid:
+                type: 'number'
+              accepted:
+                type: 'number'
+              cancelled:
+                type: 'number'
+              completed:
+                type: 'number'
         400:
           description: 'Error'
           schema:
@@ -741,6 +768,8 @@ definitions:
       phone:
         type: 'string'
       license_url:
+        type: 'string'
+      address:
         type: 'string'
   Restaurant:
     allOf:
