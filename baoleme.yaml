@@ -219,28 +219,6 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /restaurant/{id}/table:
-    parameters:
-    - name: 'id'
-      in: 'path'
-      required: true
-      description: '餐厅id'
-      type: 'string'
-    get:
-      tags:
-      - 'Customer Order'
-      summary: '获取餐厅的桌子列表'
-      responses:
-        200:
-          description: 'OK'
-          schema:
-            type: 'array'
-            items:
-              type: 'string'
-        400:
-          description: 'Error'
-          schema:
-            $ref: '#/definitions/ErrorResponse'
   /restaurant/{id}:
     parameters:
     - name: 'id'
@@ -451,7 +429,7 @@ paths:
           description: 'Error'
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /table:
+  /qrcode:
     get:
       tags:
       - 'Restaurant Management'
