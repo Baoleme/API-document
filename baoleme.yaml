@@ -455,7 +455,7 @@ paths:
     get:
       tags:
       - 'Restaurant Management'
-      summary: '获取餐厅的桌子列表'
+      summary: '获取餐厅的二维码列表'
       responses:
         200:
           description: 'OK'
@@ -470,11 +470,11 @@ paths:
     post:
       tags:
       - 'Restaurant Management'
-      summary: '添加新的桌子'
+      summary: '添加新的二维码'
       parameters:
       - in: 'body'
         name: 'body'
-        description: '桌子列表'
+        description: '要添加的二维码对应的桌号列表'
         required: true
         schema:
           type: 'array'
@@ -490,11 +490,11 @@ paths:
     delete:
       tags:
       - 'Restaurant Management'
-      summary: '删除桌子'
+      summary: '删除二维码'
       parameters:
       - in: 'body'
         name: 'body'
-        description: '桌子列表'
+        description: '要删除的二维码对应的桌号列表'
         required: true
         schema:
           type: 'array'
