@@ -461,6 +461,10 @@ paths:
       responses:
         200:
           description: 'OK'
+          schema:
+            type: 'array'
+            items:
+              type: 'string'
         400:
           description: 'Error'
           schema:
