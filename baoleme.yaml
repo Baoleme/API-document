@@ -586,7 +586,6 @@ paths:
       - in: 'query'
         name: 'dump'
         description: 'dump是另个一分类的id，可选填。如果提供dump，则该分类下的所有菜品会被导入到新分类下；如果不提供，这些菜品会被直接删除'
-        required: true
         type: 'string'
       responses:
         200:
