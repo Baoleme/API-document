@@ -361,7 +361,19 @@ paths:
     get:
       tags:
       - 'Restaurant Management'
-      summary: '获取今日订单数量'
+      summary: '获取订单统计数量'
+      description: '参数为开始时间和结束时间，如果都不提交则获取全部，如果都提交则获取区间内的数量，不允许只提交一个'
+      parameters:
+      - in: 'query'
+        name: 'from'
+        description: '开始时间'
+        default: 0
+        type: 'string'
+      - in: 'query'
+        name: 'to'
+        description: '结束时间'
+        default: 0
+        type: 'string'
       responses:
         200:
           description: 'OK'
